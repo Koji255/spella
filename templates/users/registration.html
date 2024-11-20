@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <title>registration</title>
+{% endblock %}
+
+{% block main %}
+    <div name="form" style="max-width: fit-content; margin-top: 5pc; margin-left: auto; margin-right: auto;">
+        <form action={% url "user_registration" %} method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+{% endblock %}
