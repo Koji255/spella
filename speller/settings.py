@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'speller_db',
         'USER': 'koji',
-        'PASSWORD': 'koji',
+        'PASSWORD': 'koji_admin',
         'HOST': 'localhost',
     }
 }
