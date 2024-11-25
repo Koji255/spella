@@ -8,7 +8,7 @@ from speller_app import views as speller_views
 from . import views as users_views
 
 
-# Create your views here.
+# Views here
 def registration(request):
     """Registration view"""
     if request.method == "POST":
@@ -20,44 +20,41 @@ def registration(request):
         
     else:
         form = UserRegistrationForm()
-        
-    context = {"form": form}
 
-    return render(request, "users/registration.html", context)
+    return render(request, "users/registration.html", {"form": form})
 
 
 def login(request):
     """Login view"""
     if request.method == "POST":
-        form = UserLoginForm(data=request.POST)
+        post = request.POST
+        # Audit
+        form = UserLoginForm(data=post)
 
         if form.is_valid():
-            username = request.POST["username"]
-            password = request.POST["password"]
-            
-            user = auth.authenticate(username=username, password=password)
-
-            if user:
+            # Authentication
+            if user := auth.authenticate(username=post["username"], 
+                                         password=post["password"]):
+                # Authorisation
                 auth.login(request, user)
+
                 return HttpResponseRedirect(reverse(speller_views.index))
     
     else:
         form = UserLoginForm()
 
-    context = {
-        "form": form,
-    }
-    
-    return render(request, "users/login.html", context=context)
+    return render(request, "users/login.html", context={"form": form})
 
 
 def logout(request):
+    """Logout view"""
     auth.logout(request)
 
     return HttpResponseRedirect(reverse(speller_views.index))
 
 
 def profile(request):
+    """Profile view"""
     if request.method == "POST":
         form = UserProfileForm(instance=request.user, data=request.POST)
 
@@ -72,6 +69,4 @@ def profile(request):
     else:
         form = UserProfileForm(instance=request.user)
 
-    return render(request, "users/profile.html", {
-        "form": form,
-    })
+    return render(request, "users/profile.html", {"form": form})
