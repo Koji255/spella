@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth
 from django.urls import reverse
 
-from users.forms import UserRegistrationForm, UserLoginForm
+from users.forms import UserRegistrationForm, UserLoginForm, UserProfileForm
 
 from speller_app import views as speller_views
 from . import views as users_views
@@ -44,6 +44,34 @@ def login(request):
     else:
         form = UserLoginForm()
 
-    context = {"form": form}
+    context = {
+        "form": form,
+    }
     
     return render(request, "users/login.html", context=context)
+
+
+def logout(request):
+    auth.logout(request)
+
+    return HttpResponseRedirect(reverse(speller_views.index))
+
+
+def profile(request):
+    if request.method == "POST":
+        form = UserProfileForm(instance=request.user, data=request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(reverse(users_views.profile))
+        
+        else:
+            print(form.errors)
+
+    else:
+        form = UserProfileForm(instance=request.user)
+
+    return render(request, "users/profile.html", {
+        "form": form,
+    })

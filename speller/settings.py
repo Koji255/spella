@@ -76,11 +76,12 @@ WSGI_APPLICATION = 'speller.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'speller_db',
         'USER': 'koji',
         'PASSWORD': 'koji_admin',
         'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -119,7 +120,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+from os import path as os_path
+
+STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os_path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

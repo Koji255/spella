@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <title>registration</title>
+    <title>profile</title>
 {% endblock %}
 
 {% block main %}
     <div name="form" style="max-width: fit-content; margin-top: 5pc; margin-left: auto; margin-right: auto;">
-        <form action={% url "user_registration" %} method="POST">
+        <form action="{% url 'user_profile' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Submit">

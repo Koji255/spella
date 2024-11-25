@@ -7,4 +7,4 @@ from django.urls import reverse
 
 # Create your views here.
 def index(request):
-    return render(request, "index.html")
+    return render(request, "speller_app/index.html")
