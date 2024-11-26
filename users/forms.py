@@ -18,8 +18,8 @@ class UserLoginForm(AuthenticationForm):
         fields = ("username", "password")
 
 
-class UserProfileForm(UserChangeForm):
+class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("username", "first_name", "last_name", "email", "password",)
+        fields = ("username", "first_name", "last_name", "email",)

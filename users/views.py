@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth
-from django.urls import reverse
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse, reverse_lazy
 
 from users.forms import UserRegistrationForm, UserLoginForm, UserProfileForm
 
@@ -46,13 +48,6 @@ def login(request):
     return render(request, "users/login.html", context={"form": form})
 
 
-def logout(request):
-    """Logout view"""
-    auth.logout(request)
-
-    return HttpResponseRedirect(reverse(speller_views.index))
-
-
 def profile(request):
     """Profile view"""
     if request.method == "POST":
@@ -70,3 +65,15 @@ def profile(request):
         form = UserProfileForm(instance=request.user)
 
     return render(request, "users/profile.html", {"form": form})
+
+
+def logout(request):
+    """Logout view"""
+    auth.logout(request)
+
+    return HttpResponseRedirect(reverse(speller_views.index))
+
+
+class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    template_name = "users/change_password.html"
+    success_url = reverse_lazy(users_views.profile)
