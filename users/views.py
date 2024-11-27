@@ -1,13 +1,12 @@
 from django.shortcuts import render, HttpResponseRedirect
+
 from django.contrib import auth
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.urls import reverse, reverse_lazy
 
 from users.forms import UserRegistrationForm, UserLoginForm, UserProfileForm
-
-from speller_app import views as speller_views
-from . import views as users_views
 
 
 # Views here
@@ -18,7 +17,7 @@ def registration(request):
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse(users_views.login))
+            return HttpResponseRedirect(reverse("users:user_login"))
         
     else:
         form = UserRegistrationForm()
@@ -40,7 +39,7 @@ def login(request):
                 # Authorisation
                 auth.login(request, user)
 
-                return HttpResponseRedirect(reverse(speller_views.index))
+                return HttpResponseRedirect(reverse("users:user_profile"))
     
     else:
         form = UserLoginForm()
@@ -50,30 +49,33 @@ def login(request):
 
 def profile(request):
     """Profile view"""
-    if request.method == "POST":
-        form = UserProfileForm(instance=request.user, data=request.POST)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = UserProfileForm(instance=request.user, data=request.POST)
 
-        if form.is_valid():
-            form.save()
+            if form.is_valid():
+                form.save()
 
-            return HttpResponseRedirect(reverse(users_views.profile))
-        
+                return HttpResponseRedirect(reverse("users:user_profile"))
+            
+            else:
+                print(form.errors)
+
         else:
-            print(form.errors)
+            form = UserProfileForm(instance=request.user)
 
-    else:
-        form = UserProfileForm(instance=request.user)
-
-    return render(request, "users/profile.html", {"form": form})
+        return render(request, "users/profile.html", {"form": form})
+    
+    return HttpResponseRedirect(reverse("users:user_login"))
 
 
 def logout(request):
     """Logout view"""
     auth.logout(request)
 
-    return HttpResponseRedirect(reverse(speller_views.index))
-
+    return HttpResponseRedirect(reverse("speller_app:index"))
 
 class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+    """Password change View"""
     template_name = "users/change_password.html"
-    success_url = reverse_lazy(users_views.profile)
+    success_url = reverse_lazy("users:user_profile")
