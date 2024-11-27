@@ -2,12 +2,12 @@ from django.db import models
 from users.models import User
 
 # Create your models here.
-class Text(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+class Report(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Combination of 4 logenst eng words + 3 symbols as "."
     header = models.CharField(183)
     text = models.TextField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.pk}, {self.header}; user: {self.user_id}"
+        return f"Text(id[{self.pk}], header[{self.header}]); user(id[{self.user_id}])"
