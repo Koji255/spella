@@ -13,6 +13,44 @@ body {
     font-weight: 500;
 }
 
-.navbar-toggler {
-    border: 1px solid #d8dde2 !important; /* Темно-серая рамка */
+.navbar-brand:hover {
+    color: #ADA198;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-link:hover {
+    color: #ADA198;
+}
+
+.nav-link.dropdown-toggle {
+    text-align: right;
+}
+
+.navbar {
+    height: 4.5vh;
+}
+
+.nav-item.dropdown .dropdown-menu {
+    transform: translateX(-46%);
+    
+    background-color: #36332f;
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.dropdown-divider {
+    background-color: #ADA198;
+}
+
+#tagline {
+    display: flex;
+    justify-content: center;
+    margin-top: 17.5vh;
+
+    font-size: 4vw;
 }
