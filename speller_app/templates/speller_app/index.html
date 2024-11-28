@@ -5,5 +5,21 @@
 {% endblock %}
 
 {% block main %}
-    <h1 id="tagline">copy, paste,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Spell!</h1>
+    <div class="container" name="index-content">
+        
+        <h1 name="tagline">
+            copy, paste, <strong name="tagline">Spell!</strong>
+        </h1>
+        <strong><hr name="content-divider"></strong>
+
+        <div class="container" name="index-description">
+            <p name="index-description">
+                    AnySpell is a powerful web application designed to fix spelling errors in your text. Simply type or paste your content, and the tool will automatically detect and correct any mistakes, providing you with a polished, error-free result. It supports multiple languages and offers an intuitive interface, making it accessible for everyone. Whether you're writing an email, a report, or just a quick message, AnySpell ensures your text is accurate and professional. Users can sign up to save their corrected texts and prevent data loss for future use.<br>To use, just press button below.
+            </p>
+        </div>
+
+        <a class="btn btn-dark" href="{% url 'speller_app:spell' %}" role="button" name="spell-button">
+            spell
+        </a>
+    </div>
 {% endblock %}
