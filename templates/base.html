@@ -18,9 +18,11 @@
 
     <body>
         <header>
-            <nav class="navbar navbar-expand-lg">
+            <nav class="navbar bg-dark">
                 <div class="container-fluid">
+                    
                     <a class="navbar-brand" href="{% url 'speller_app:index' %}">Home</a>
+
                     <div class="navbar-expand navbar" id="navbarSupportedContent">
                         <ul class="navbar-nav">
 
@@ -29,12 +31,12 @@
                                     Account
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="url 'users:user_profile'">Profile</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'users:user_profile' %}">Profile</a></li>
                                     
                                     <li><hr class="dropdown-divider"></li>
                                     
                                     <li>
-                                        <a class="dropdown-item" href="url {% url 'users:user_logout' %}">Logout</a>
+                                        <a class="dropdown-item" href="{% url 'users:user_logout' %}">Logout</a>
                                     </li>
                                 </ul>
                             </li>

@@ -1,53 +1,8 @@
+/* 
+Color palete: #ADA198; #36332f
+*/
+
 body {
-    background-color: #ADA198;
-}
-
-.navbar {
-    background-color: #36332f;
-    height: 40px;
-}
-
-.navbar-brand {
-    position: fixed;
-
-    top: -2px;
-    left: 13px;
-
-    color: white;
-
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 500;
-    font-size: 140%;
-}
-
-.navbar-brand:hover {
-    color: #ADA198;
-}
-
-.nav-link {
-    color: white;
-}
-
-.nav-link:hover {
-    color: #ADA198;
-}
-
-.nav-item.dropdown {
-    position: fixed;
-    top: 0;
-    right: 0;
-}
-
-.dropdown-menu {
-    background-color: #36332f;
-    transform: translateX(-45%);
-}
-
-.dropdown-item {
-    color: white;
-}
-
-.dropdown-divider {
     background-color: #ADA198;
 }
 
