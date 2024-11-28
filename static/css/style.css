@@ -96,3 +96,16 @@ p[name="index-description"] {
 .btn.btn-dark {
     border-radius: 20px;
 }
+
+textarea[name="spelled-text"] {
+    margin-top: 1rem;
+
+    padding: 0.8rem;
+
+    border-radius: 10px;
+    
+    border-color: rgb(156, 156, 156);
+
+    background-color: #292929;
+    color: white;
+}

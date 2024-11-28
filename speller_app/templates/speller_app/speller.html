@@ -16,8 +16,8 @@
         {% endif %}
 
         {% if spelled_text %}
-            <h1>Corrected Text:</h1>
-            <textarea rows="10" cols="50" readonly>{{ spelled_text }}</textarea>
+            <center><h1>Corrected Text</h1></center>
+            <textarea name="spelled-text" rows="{{ lines }}" cols="50" readonly>{{ spelled_text }}</textarea>
         {% endif %}
         
     </div>

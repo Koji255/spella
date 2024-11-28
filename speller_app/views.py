@@ -1,9 +1,8 @@
 import re
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
 
-from django.utils.timezone import localdate
+from django.http import HttpResponse, HttpResponseRedirect
 
 from django.urls import reverse
 
@@ -32,17 +31,19 @@ def spell(request):
 
             header = f"{spelled_text[:15]}..." if len(spelled_text) > 15 else spelled_text
 
-            if report := Report.objects.create(user=User.objects.get(pk=request.user.id), 
-                                                   header=header, 
-                                                   text=spelled_text,
-                                                   ):
-                
-                report.save()
+            if request.user.is_authenticated:
+            
+                if report := Report.objects.create(
+                    user=User.objects.get(pk=request.user.id), header=header, text=spelled_text):
+                    
+                    report.save()
 
-                return render(request, "speller_app/speller.html", context={
-                    "form": form,
-                    "spelled_text": spelled_text,
-                })
+            return render(request, "speller_app/speller.html", context={
+                "form": form,
+                "spelled_text": spelled_text,
+                # Needs for dynamicaly changing of spelled text background area
+                "lines": len(spelled_text) / 50,
+            })
         
     else:
         form = TextInputForm()
