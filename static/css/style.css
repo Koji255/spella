@@ -2,6 +2,38 @@
 Color palete: #ADA198; #36332f
 */
 
+/* header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 200px;
+} */
+
+.navbar {
+    height: 50px;
+}
+
+.container-fluid {
+    margin-top: -7px;
+}
+
+.navbar-brand, .nav-link {
+    color: white
+}
+
+.navbar-brand:hover, .nav-link:hover {
+    color: #ADA198;
+}
+
+.dropdown-menu {
+    position: absolute;
+
+    background-color: rgb(226, 219, 219);
+    border: 0.1rem solid gray;
+
+    margin-left: -4rem;
+}
+
 body {
     background-color: #ADA198;
 }
@@ -10,7 +42,7 @@ body {
 .container[name="index-content"] {
     --element-size: 3.3em;
     text-align: center;
-    margin-top: 12.5vh;
+    margin-top: 10vh;
 }
 
 h1[name="tagline"] {
@@ -42,16 +74,25 @@ p[name="index-description"] {
 }
 
 .btn.btn-dark[name="spell-button"] {
-    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 
-    align-items: center;
-    align-self: center;
-    padding-top: 0.25vh;
+    height: 3rem;
+    width: 9rem;
 
+    padding-top: 0.15rem;
 
-    height: 5vh;
-    width: 7vw;
-    border-radius: 25px;
+    font-size: 1.7rem;
+    font-weight: 500;
 
-    font-size: 150%;
+    border-radius: 50px;
+}
+
+.btn.btn-dark[name="spell-button"]:hover, .btn.btn-dark:hover {
+    color: #ADA198 !important;
+    background-color: #292929 !important;
+}
+
+.btn.btn-dark {
+    border-radius: 20px;
 }

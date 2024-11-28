@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/koji/Desktop/code/django/projects/speller/venv
+set -gx VIRTUAL_ENV /home/koji/Desktop/code/django_projects/speller/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

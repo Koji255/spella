@@ -11,7 +11,7 @@
             <form action="{% url 'speller_app:spell' %}" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" value="Spell">
+                <input class="btn btn-dark" type="submit" value="Spell">
             </form>
         {% endif %}
 
