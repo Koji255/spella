@@ -16,14 +16,56 @@
         {% endif %}
 
         {% if spelled_text %}
-            <center><h1>Corrected Text</h1></center>
-            <textarea name="spelled-text" rows="{{ lines }}" cols="50" readonly>{{ spelled_text }}</textarea>
+
             {% if not user.authenticated %}
-                <hr>
-                <p>To save your result please register or login using link below</p>
-                <!-- add buttons here -->
-                <>
+
+                    <div class="container" name="results-container">
+                        <center>
+                        <p>To save your result register or login using link below.</p>
+                        
+                        <hr style="width: 23rem;">
+
+                        <a class="btn btn-dark" href="{% url 'users:user_login' %}" style="margin-right: 2rem;">
+                        Login
+                        </a>
+                        <a class="btn btn-dark" href="{% url 'users:user_registration' %}">Register</a>
+                        <center>
+                    </div>
             {% endif %}
+
+            <!-- <center><h1 style="margin-top: 12.5rem;">Spelled Text</h1></center> -->
+            <div class="container" name="spelled-text-container"> 
+                <h1 style="margin-top: 12.5rem;">
+                    <button id="copyBtn" name="copyBtn" class="btn-dark" style="color: rgb(26, 26, 26); background: none; border: none; font-size:3rem; font-weight: 500;">
+                        Copy Spelled Text
+                    </button>
+                </h1>
+                
+                <textarea name="spelled-text" type="text" id="text" rows="{{ lines }}" cols="50" readonly>
+                    {{ spelled_text }}
+                </textarea>
+            </div>
+
+            <script>
+                // Taking elements
+                const copyBtn = document.getElementById('copyBtn');
+                const textArea = document.getElementById('text');
+        
+                // Event Listener for a button
+                copyBtn.addEventListener('click', function() {
+                    // Select text
+                    textArea.select();
+                    textArea.setSelectionRange(0, 99999); // Для мобильных устройств
+        
+                    // Copy to clipboard
+                    try {
+                        document.execCommand('copy');
+                        alert('Copied!')
+                    } catch (err) {
+                        alert('Failed to copy text.');
+                    }
+                });
+            </script>
 
         {% endif %}
         

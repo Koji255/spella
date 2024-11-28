@@ -97,13 +97,25 @@ p[name="index-description"] {
     border-radius: 20px;
 }
 
+/* spell view */
+.container[name="spelled-text-container"] {
+    margin-top: -8rem;
+}
+
+button[name="copyBtn"]:hover {
+    color: #e0e0e0 !important;
+}
+
 textarea[name="spelled-text"] {
-    margin-top: 1rem;
+
+    display: flex;
+    justify-content: center;
+
+    width: 28rem;
 
     padding: 0.8rem;
 
     border-radius: 10px;
-    
     border-color: rgb(156, 156, 156);
 
     background-color: #292929;
