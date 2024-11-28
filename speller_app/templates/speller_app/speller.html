@@ -18,6 +18,13 @@
         {% if spelled_text %}
             <center><h1>Corrected Text</h1></center>
             <textarea name="spelled-text" rows="{{ lines }}" cols="50" readonly>{{ spelled_text }}</textarea>
+            {% if not user.authenticated %}
+                <hr>
+                <p>To save your result please register or login using link below</p>
+                <!-- add buttons here -->
+                <>
+            {% endif %}
+
         {% endif %}
         
     </div>
