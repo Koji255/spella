@@ -1,0 +1,3 @@
+[submodule "libs/speller"]
+	path = libs/speller
+	url = git@github.com:Koji255/speller.git
