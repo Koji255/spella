@@ -5,7 +5,7 @@ from users.models import User
 class Report(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Combination of 4 logenst eng words + 3 symbols as "."
-    header = models.CharField(183)
+    header = models.CharField(48)
     text = models.TextField()
     date = models.DateTimeField(auto_now=True)
 

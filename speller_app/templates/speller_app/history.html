@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>history</title>
+{% endblock %}
+
+{% block main %}
+    <center>
+        <div class="container" name="history-table-container">
+            <h1 style="margin-top: -4.3rem !important; color: #171a1d; background: none; border: none; font-size:3rem; font-weight: 500;">
+                Spellings History
+            </h1>
+
+            <hr style="width: 23rem; margin-bottom: 2.5rem;">
+
+            <table class="table table-light table-bordered table-rounded" style="width: fit-content;">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Text</th>
+                        <th>Date</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for report in object_list %}
+                        <tr>
+                            <td>{{ report.0 }}</td>
+                            <td>{{ report.1 }}</td>
+                            <td>{{ report.2 }}</td>
+                            <td>
+                                <a href="{% url 'speller_app:history' %}/{{ report.0 }}">
+                                history/{{ report.0 }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+        </div>
+    </center>
+{% endblock %}

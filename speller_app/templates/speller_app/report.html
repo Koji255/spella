@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <title>report</title>
+{% endblock %}
+
+{% block main %}
+    <div class="container" name="text-container" style="display:flex; justify-content: center; width:35rem">
+        
+        <h1 style="margin-top: 4.2rem">
+            <button id="copyBtn" name="copyBtn" class="btn-dark" style="color: #171a1d; background: none; border: none; font-size:3rem; font-weight: 500;">
+                Copy Spelled Text
+            </button>
+        </h1>
+
+    </div>
+
+    <center>
+        <hr style="width: 23rem;">
+        <textarea name="spelled-text" type="text" id="text" rows="20" cols="50" readonly>{{ spelled_text }}</textarea>
+    </center>
+
+    <script>
+        // Taking elements
+        const copyBtn = document.getElementById('copyBtn');
+        const textArea = document.getElementById('text');
+
+        // Event Listener for a button
+        copyBtn.addEventListener('click', function() {
+            // Select text
+            textArea.select();
+            textArea.setSelectionRange(0, 99999); // Для мобильных устройств
+
+            // Copy to clipboard
+            try {
+                document.execCommand('copy');
+                alert('Copied!')
+            } catch (err) {
+                alert('Failed to copy text.');
+            }
+        });
+    </script>
+{% endblock %}

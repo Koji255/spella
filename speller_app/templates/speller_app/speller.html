@@ -5,39 +5,53 @@
 {% endblock %}
 
 {% block main %}
-    <div name="form" style="max-width: fit-content; margin-top: 5pc; margin-left: auto; margin-right: auto;">
+    <div class="container" name="form" style="max-width: fit-content; margin-top: 5pc; margin-left: auto; margin-right: auto;">
+        {% if not user.is_authenticated %}
+
+            <div class="container" name="results-container">
+                <center>
+                <p>To save your results register or login using link below.</p>
+                
+                <hr style="width: 23rem;">
+
+                <a class="btn btn-dark" href="{% url 'users:user_login' %}" style="margin-right: 2rem;">
+                    Login
+                </a>
+                <a class="btn btn-dark" href="{% url 'users:user_registration' %}">
+                    Register
+                </a>
+                <center>
+            </div>
+
+        {% endif %}
         
         {% if not spelled_text %}
-            <form action="{% url 'speller_app:spell' %}" method="post">
+
+                <center>
+                    <h1 style="margin-top: 4rem; color: #171a1d; background: none; border: none; font-size:3rem; font-weight: 500;">
+                        Enter the Text
+                    </h1>
+
+                    <hr style="width: 23rem;">
+                </center>
+
+
+            <form class="custom-form" action="{% url 'speller_app:spell' %}" method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input class="btn btn-dark" type="submit" value="Spell">
+                
+                <center><input class="btn btn-dark" type="submit" value="Spell"></center>
             </form>
+
         {% endif %}
 
         {% if spelled_text %}
-
-            {% if not user.authenticated %}
-
-                    <div class="container" name="results-container">
-                        <center>
-                        <p>To save your results register or login using link below.</p>
-                        
-                        <hr style="width: 23rem;">
-
-                        <a class="btn btn-dark" href="{% url 'users:user_login' %}" style="margin-right: 2rem;">
-                        Login
-                        </a>
-                        <a class="btn btn-dark" href="{% url 'users:user_registration' %}">Register</a>
-                        <center>
-                    </div>
-            {% endif %}
 
             <center>
                 <div class="container" name="spelled-text-container"> 
 
                         <h1 style="margin-top: 12.5rem;">
-                            <button id="copyBtn" name="copyBtn" class="btn-dark" style="color: rgb(26, 26, 26); background: none; border: none; font-size:3rem; font-weight: 500;">
+                            <button id="copyBtn" name="copyBtn" class="btn-dark" style="color: #171a1d; background: none; border: none; font-size:3rem; font-weight: 500;">
                                 Copy Spelled Text
                             </button>
                         </h1>

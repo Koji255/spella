@@ -1,7 +1,5 @@
 from django.urls import path
 
-from django.forms import BaseForm
-
 from . import views
 
 app_name = "speller_app"
@@ -9,4 +7,6 @@ app_name = "speller_app"
 urlpatterns = [
     path("", views.index, name="index"),
     path("spell_the_text", views.spell, name="spell"),
+    path("history", views.HistoryView.as_view(), name="history"),
+    path("history/<int:report_id>", views.report, name="report"),
 ]

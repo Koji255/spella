@@ -23,6 +23,12 @@
                     
                     <a class="navbar-brand" href="{% url 'speller_app:index' %}">Home</a>
 
+                    {% if user.is_authenticated %}
+                        <li class="nav-item" style="position:absolute; top:0.5rem; left: rem;">
+                            <a class="nav-link" href="{% url 'speller_app:history' %}">
+                        </li>
+                    {% endif %}
+
                     <div class="navbar-expand navbar" id="navbarSupportedContent">
                         <ul class="navbar-nav">
 
