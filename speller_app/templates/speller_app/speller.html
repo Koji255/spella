@@ -21,7 +21,7 @@
 
                     <div class="container" name="results-container">
                         <center>
-                        <p>To save your result register or login using link below.</p>
+                        <p>To save your results register or login using link below.</p>
                         
                         <hr style="width: 23rem;">
 
@@ -33,18 +33,20 @@
                     </div>
             {% endif %}
 
-            <!-- <center><h1 style="margin-top: 12.5rem;">Spelled Text</h1></center> -->
-            <div class="container" name="spelled-text-container"> 
-                <h1 style="margin-top: 12.5rem;">
-                    <button id="copyBtn" name="copyBtn" class="btn-dark" style="color: rgb(26, 26, 26); background: none; border: none; font-size:3rem; font-weight: 500;">
-                        Copy Spelled Text
-                    </button>
-                </h1>
-                
-                <textarea name="spelled-text" type="text" id="text" rows="{{ lines }}" cols="50" readonly>
-                    {{ spelled_text }}
-                </textarea>
-            </div>
+            <center>
+                <div class="container" name="spelled-text-container"> 
+
+                        <h1 style="margin-top: 12.5rem;">
+                            <button id="copyBtn" name="copyBtn" class="btn-dark" style="color: rgb(26, 26, 26); background: none; border: none; font-size:3rem; font-weight: 500;">
+                                Copy Spelled Text
+                            </button>
+                        </h1>
+
+                    <hr style="width: 23rem;">
+                    
+                    <textarea name="spelled-text" type="text" id="text" rows="{{ lines }}" cols="50" readonly>{{ spelled_text }}</textarea>
+                </div>
+            </center>
 
             <script>
                 // Taking elements
