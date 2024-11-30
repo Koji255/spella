@@ -24,8 +24,8 @@ This feature enables users to reference their past inputs and corrections easily
 
 ### 4. Database-Driven Backend
 Spella employs a database to manage user accounts, submission histories, and corrections:
-- **SQLite** is used for local development.
-- The application is compatible with **PostgreSQL** or **MySQL** for production environments.
+- **PostgreSQL** is used for local development.
+- The application is compatible with **MySQL** for production environments.
 
 ### 5. Intuitive Interface
 Spella's user interface is clean and straightforward, allowing users to focus on their tasks without unnecessary distractions:
@@ -42,7 +42,7 @@ To deploy Spella on your local machine, follow these steps:
 ### Step 1: Clone the Repository
 Start by cloning the GitHub repository to your local machine:
 ```bash
-git clone https://github.com/Koji255/spella.git
+git clone --recurse-submodules https://github.com/Koji255/spella.git
 cd spella
 ```
 
