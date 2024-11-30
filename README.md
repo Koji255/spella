@@ -127,3 +127,268 @@ git checkout -b feature-name
 ### Commit Changes
 ### Submit a Pull Request
 Explain your changes clearly and reference any related issues.
+
+
+# Description
+
+## `speller_app/views.py` Overview
+
+The `views.py` file in the `speller_app` contains the logic for handling user requests and rendering responses. Below is a detailed explanation of the key views and their functionality:
+
+### 1. `index(request)`
+**Purpose**: Renders the homepage of the application.
+
+- **Input**: 
+  - `request`: HTTP request object.
+- **Output**: Renders the `index.html` template, which serves as the landing page.
+
+---
+
+### 2. `spell(request)`
+**Purpose**: Handles the main text correction functionality of the application.
+
+- **Input**: 
+  - `request`: HTTP request object with `POST` or `GET` data.
+- **Logic**:
+  - For `POST` requests:
+    - Processes the user-submitted form (`TextInputForm`).
+    - Uses the external `speller` function from `libs.text_handler` to generate a corrected version of the input text.
+    - Stores the correction in the database for logged-in users (limits to 15 entries by replacing the oldest).
+  - For `GET` requests:
+    - Initializes an empty form for user input.
+- **Output**: Renders the `speller.html` template with:
+  - The original form.
+  - The corrected text (if provided).
+  - Dynamic background height adjustment for the corrected text area.
+  
+---
+
+### 3. `report(request, report_id)`
+**Purpose**: Displays a stored corrected text report from the database.
+
+- **Input**: 
+  - `request`: HTTP request object.
+  - `report_id`: Primary key of the `Report` to retrieve.
+- **Logic**:
+  - Validates the user’s session.
+  - Fetches the corresponding report text if the user is authenticated.
+  - Redirects to the homepage if the user is not logged in.
+- **Output**: Renders the `report.html` template with the stored corrected text.
+
+---
+
+### 4. `HistoryView(LoginRequiredMixin, ListView)`
+**Purpose**: Provides a paginated view of a user’s correction history.
+
+- **Inheritance**: 
+  - Extends `ListView` for rendering object lists.
+  - Uses `LoginRequiredMixin` to restrict access to logged-in users only.
+- **Attributes**:
+  - `template_name`: Points to the `history.html` template.
+  - `context_object_name`: Names the context variable passed to the template.
+- **Logic**:
+  - Fetches and orders reports associated with the authenticated user by date (most recent first).
+- **Output**: Renders the `history.html` template with a table of the user’s correction history.
+
+---
+
+## External Dependencies
+
+- **`speller` Function**: 
+  - Located in `libs.text_handler.src.methods`.
+  - Processes user text and returns a corrected version.
+- **Models**:
+  - `User`: Django’s built-in user model.
+  - `Report`: Custom model to store corrected text and metadata.
+
+---
+
+## Templates
+
+The `views.py` functions interact with the following templates:
+- `index.html`: Homepage template.
+- `speller.html`: Displays the input form and corrected text.
+- `report.html`: Shows a single stored correction.
+- `history.html`: Displays a list of previous corrections.
+
+This modular design ensures clear separation of concerns and ease of scalability for future features.
+
+
+## `speller_app/models.py` Overview
+
+The `models.py` file in the `speller_app` defines the database schema for storing corrected text reports. This file uses Django's ORM (Object-Relational Mapping) to interact with the database.
+
+### 1. `Report` Model
+The `Report` model represents a single corrected text entry associated with a user.
+
+#### Fields:
+- **`user`**: A `ForeignKey` linking each report to a specific user.
+  - **Relation**: One-to-many (a user can have multiple reports).
+  - **Cascade Delete**: If a user is deleted, all their associated reports are also removed.
+  
+- **`header`**: A `CharField` for storing a brief summary of the corrected text.
+  - **Max Length**: 48 characters.
+  - **Purpose**: Provides a quick overview of the correction (e.g., the first 46 characters followed by "...").
+
+- **`text`**: A `TextField` for storing the full corrected text.
+  - **Purpose**: Contains the entire corrected version of the user’s input.
+
+- **`date`**: A `DateTimeField` for recording the timestamp of the report.
+  - **Auto-Update**: Automatically updates to the current time whenever the report is modified.
+
+#### Methods:
+- **`__str__()`**:
+  - Returns a string representation of the model instance.
+  - Format: `Text(id[{self.pk}], header[{self.header}]); user(id[{self.user_id}])`.
+
+---
+
+### Example Usage
+The `Report` model is used in:
+- **`views.py`**:
+  - To create, retrieve, update, and delete reports.
+  - Ensures a maximum of 15 reports per user by replacing the oldest entry.
+- **Templates**:
+  - `history.html` displays a list of reports using the `header` and `date` fields.
+  - `report.html` shows the full corrected text using the `text` field.
+
+This model ensures efficient storage and management of user corrections in the database while maintaining flexibility for future enhancements.
+
+
+## `users/views.py` Overview
+
+The `views.py` file in the `users` application manages user-related functionalities such as registration, login, profile management, and password changes. Below is a breakdown of the provided views:
+
+---
+
+### 1. `registration(request)`
+**Purpose**: Handles user registration.
+
+- **Input**:
+  - `request`: HTTP request object with `POST` data for form submission.
+- **Logic**:
+  - On `POST`:
+    - Processes the submitted `UserRegistrationForm`.
+    - Saves the new user if the form is valid.
+    - Redirects to the login page upon success.
+  - On `GET`:
+    - Initializes an empty registration form.
+- **Output**: Renders the `registration.html` template with the registration form.
+
+---
+
+### 2. `login(request)`
+**Purpose**: Manages user authentication and login.
+
+- **Input**:
+  - `request`: HTTP request object with `POST` data containing username and password.
+- **Logic**:
+  - On `POST`:
+    - Validates the `UserLoginForm`.
+    - Authenticates the user using `auth.authenticate`.
+    - Logs in the user and redirects to the application's homepage if authentication succeeds.
+  - On `GET`:
+    - Displays an empty login form.
+- **Output**: Renders the `login.html` template with the login form.
+
+---
+
+### 3. `profile(request)`
+**Purpose**: Allows users to view and update their profile.
+
+- **Input**:
+  - `request`: HTTP request object with `POST` data for profile updates.
+- **Logic**:
+  - Validates if the user is authenticated.
+  - On `POST`:
+    - Processes the `UserProfileForm` populated with the user’s data.
+    - Saves changes if the form is valid.
+  - On `GET`:
+    - Displays the current user profile in an editable form.
+  - Redirects to the login page if the user is not authenticated.
+- **Output**: Renders the `profile.html` template with the profile form.
+
+---
+
+### 4. `logout(request)`
+**Purpose**: Logs out the authenticated user.
+
+- **Input**:
+  - `request`: HTTP request object.
+- **Logic**:
+  - Calls `auth.logout` to end the user session.
+  - Redirects to the application's homepage.
+- **Output**: Redirects to the homepage.
+
+---
+
+### 5. `CustomPasswordChangeView`
+**Purpose**: Provides functionality for authenticated users to change their passwords.
+
+- **Inheritance**:
+  - Extends `PasswordChangeView` to manage password changes.
+  - Includes `LoginRequiredMixin` to restrict access to logged-in users.
+- **Attributes**:
+  - `template_name`: Specifies the `change_password.html` template.
+  - `success_url`: Redirects to the user’s profile page upon successful password change.
+  
+---
+
+## Templates
+
+The `views.py` functions use the following templates:
+- `registration.html`: Displays the user registration form.
+- `login.html`: Displays the login form.
+- `profile.html`: Shows and allows editing of the user’s profile.
+- `change_password.html`: Provides a form for password changes.
+
+These views are designed to ensure a seamless user experience, with secure authentication and intuitive navigation for account management tasks.
+
+
+## `users/forms.py` Overview
+
+The `forms.py` file in the `users` application defines forms for user-related functionalities, leveraging Django’s built-in forms framework. Below are the forms included:
+
+---
+
+### 1. `UserRegistrationForm`
+**Purpose**: Handles new user registration.
+
+- **Base Class**: `UserCreationForm`.
+- **Customizations**:
+  - Extends the default `UserCreationForm` to include additional fields if necessary.
+  - Provides validation logic to ensure proper user data entry.
+- **Fields**:
+  - Includes fields like `username`, `password1`, `password2`, and other optional fields based on the project requirements.
+
+---
+
+### 2. `UserLoginForm`
+**Purpose**: Manages user authentication during login.
+
+- **Base Class**: `AuthenticationForm`.
+- **Customizations**:
+  - Simplifies the login process with validation for `username` and `password`.
+- **Fields**:
+  - Typically includes `username` and `password` inputs.
+
+---
+
+### 3. `UserProfileForm`
+**Purpose**: Allows users to update their profile details.
+
+- **Base Class**: `ModelForm`.
+- **Customizations**:
+  - Uses the `User` model to prepopulate and update user data.
+  - Supports fields such as `first_name`, `last_name`, `email`, and other editable profile attributes.
+- **Features**:
+  - Ensures valid data entry and updates user information securely.
+
+---
+
+## Integration in Views
+- **`UserRegistrationForm`**: Used in the `registration` view to register new users.
+- **`UserLoginForm`**: Used in the `login` view to authenticate users.
+- **`UserProfileForm`**: Used in the `profile` view to manage user updates.
+
+This modular structure ensures clean, reusable, and maintainable code for user-related operations.
