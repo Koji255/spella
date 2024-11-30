@@ -5,11 +5,29 @@
 {% endblock %}
 
 {% block main %}
-    <div name="form" style="max-width: fit-content; margin-top: 15pc; margin-left:auto; margin-right:auto;">
-        <form action="{% url 'users:user_login' %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input class="btn btn-dark" type="submit" value="Submit">
-        </form>
-    </div>
+    <!-- <div name="form" style="max-width: fit-content; margin-top: 15pc; margin-left:auto; margin-right:auto;"> -->
+        <center>
+            <h1 style="margin-top: 8.5rem !important; color: #171a1d; background: none; border: none; font-size:3rem; font-weight: 500;">
+                Login
+            </h1>
+
+            <hr style="width: 7rem;">
+        </center>
+
+        <div class="mb-3" style="max-width: 20rem; margin-top: 3rem; margin-left:auto; margin-right:auto;">
+            
+            <form action="{% url 'users:user_login' %}" method="post">
+                {% csrf_token %}
+                <!-- {{ form.as_p }} -->
+                
+                <label for="username" class="form-label">Username</label>
+                <input class="form-control" type="text" name="username" placeholder="Username">
+
+                <label for="password" class="form-label">Password</label>
+                <input class="form-control" type="password" name="password" placeholder="Password">
+
+                <input class="btn btn-dark" type="submit" value="Submit" style="margin-left: 11.6rem;">
+            </form>
+        </div>
+    <!-- </div> -->
 {% endblock %}

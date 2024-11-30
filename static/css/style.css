@@ -14,23 +14,29 @@ Color palete: #ADA198; #36332f #212529, #272727
 }
 
 .container-fluid {
-    margin-top: -7px;
+    margin-top: 0;
 }
 
 .navbar-brand, .nav-link {
-    color: white
+    color: white;
 }
 
 .navbar-brand:hover, .nav-link:hover {
     color: #ADA198;
 }
 
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .dropdown-menu {
     position: absolute;
-
     background-color: rgb(226, 219, 219);
     border: 0.1rem solid gray;
 
+    margin-top: 0.65rem !important;
     margin-left: -4rem;
 }
 
@@ -143,4 +149,28 @@ textarea[name="spelled-text"], .custom-form textarea {
 
 td, th {
     padding-inline: 1rem !important;
+}
+
+/* Profile view */
+.mb-3 {
+    width: 30rem;
+
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.315);
+
+    background-color: #272727a6;
+    /* background-color: rgba(255, 255, 255, 0.726); */
+    box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.3);
+
+    color: #eeeae8;
+}
+
+.form-control {
+    margin-bottom: 1rem;
+
+    background-color: #e7e2df;
+    /* box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3); */
+    border: 1.5px solid rgb(5, 5, 5);
+    color: black;
 }

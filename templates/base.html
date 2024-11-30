@@ -20,44 +20,41 @@
         <header>
             <nav class="navbar bg-dark">
                 <div class="container-fluid">
-                    
-                    <a class="navbar-brand" href="{% url 'speller_app:index' %}">Home</a>
-
-                    {% if user.is_authenticated %}
-                        <li class="nav-item" style="position:absolute; top:0.5rem; left: rem;">
-                            <a class="nav-link" href="{% url 'speller_app:history' %}">
-                        </li>
-                    {% endif %}
-
+                    <a class="navbar-brand" href="{% url 'speller_app:index' %}" style="margin-top: -1rem">
+                        Home
+                    </a>
+            
                     <div class="navbar-expand navbar" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
-
-                            <li class="nav-item dropdown-center">
+                        <ul class="navbar-nav mx-auto" style="margin-top: -1rem;">
+                            {% if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'speller_app:history' %}">History</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Account
                                 </a>
-
                                 <ul class="dropdown-menu">
                                     {% if user.is_authenticated %}
                                         <li><a class="dropdown-item" href="{% url 'users:user_profile' %}">Profile</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="{% url 'users:user_logout' %}">Logout</a></li>
-                                    
                                     {% else %}
                                         <li><a class="dropdown-item" href="{% url 'users:user_login' %}">Login</a></li>
                                         <li><hr class="dropdown-divider"></li>
                                         <li><a class="dropdown-item" href="{% url 'users:user_registration' %}">Register</a></li>
-
                                     {% endif %}
                                 </ul>
                             </li>
                         </ul>
-
+            
                         {% block navbar %}
                         {% endblock %}
                     </div>
                 </div>
             </nav>
+                        
         </header>
 
         <main>

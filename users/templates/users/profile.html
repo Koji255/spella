@@ -6,11 +6,40 @@
 
 {% block main %}
     <div name="form" style="max-width: fit-content; margin-top: 5pc; margin-left: auto; margin-right: auto;">
-        <form action="{% url 'users:user_profile' %}" method="post">
+        <center>
+            <h1 style="margin-top: 4rem !important; color: #171a1d; background: none; border: none; font-size:3rem; font-weight: 500;">
+                Spellings History
+            </h1>
+
+            <hr style="width: 23rem;">
+        </center>
+                
+        
+        <form action="{% url 'users:user_profile' %}" method="post" style="margin-top: 2.5rem;">
             {% csrf_token %}
-            {{ form.as_p }}
-            <p>Password: <a href="{% url 'users:user_change_password' %}">Change Password</a> <p> 
-            <input class="btn btn-dark" type="submit" value="Submit">
+
+            <div class="mb-3">
+                <!-- Username -->
+                <label for="username" class="form-label">Username</label>
+                <input class="form-control" type="text" name="username" value="{{ form.username.value }}" placeholder="Enter your username">
+        
+                <!-- First Name -->
+                <label for="first_name" class="form-label">First name</label>
+                <input class="form-control" type="text" name="first_name" value="{{ form.first_name.value }}" placeholder="Enter your first name">
+        
+                <!-- Last Name -->
+                <label for="last_name" class="form-label">Last name</label>
+                <input class="form-control" type="text" name="last_name" value="{{ form.last_name.value }}" placeholder="Enter your last name">
+        
+                <!-- Email -->
+                <label for="email" class="form-label">Email</label>
+                <input class="form-control" type="email" name="email" value="{{ form.email.value }}" placeholder="Enter your email">
+                
+                <input class="btn btn-dark" name="profile-submit" type="submit" value="Submit" style="margin-top:0.7rem; margin-left: 21.7rem;">
+            </div>
+
+            <center><a href="{% url 'users:user_change_password' %}" style="color: black; text-decoration: none;">Change Password</a></center>
+            
         </form>
     </div>
 {% endblock %}

@@ -58,7 +58,6 @@ def spell(request):
 # Particular page with spelled text from history page
 def report(request, report_id):
     if request.user.is_authenticated:
-        # Need to save in db spelled text
         spelled_text = Report.objects.get(pk=report_id).text
 
         return render(request, "speller_app/report.html", context={"spelled_text": spelled_text})

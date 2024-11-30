@@ -39,7 +39,7 @@ def login(request):
                 # Authorisation
                 auth.login(request, user)
 
-                return HttpResponseRedirect(reverse("users:user_profile"))
+                return HttpResponseRedirect(reverse("speller_app:index"))
     
     else:
         form = UserLoginForm()
