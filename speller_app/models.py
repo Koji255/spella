@@ -7,7 +7,7 @@ class Report(models.Model):
     # Combination of 4 logenst eng words + 3 symbols as "."
     header = models.CharField(48)
     text = models.TextField()
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=True, editable=True)
 
     def __str__(self):
         return f"Text(id[{self.pk}], header[{self.header}]); user(id[{self.user_id}])"

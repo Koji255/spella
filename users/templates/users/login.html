@@ -18,7 +18,6 @@
             
             <form action="{% url 'users:user_login' %}" method="post">
                 {% csrf_token %}
-                <!-- {{ form.as_p }} -->
                 
                 <label for="username" class="form-label">Username</label>
                 <input class="form-control" type="text" name="username" placeholder="Username">
@@ -28,6 +27,11 @@
 
                 <input class="btn btn-dark" type="submit" value="Submit" style="margin-left: 11.6rem;">
             </form>
+
         </div>
-    <!-- </div> -->
+
+        <center>
+            <p style="padding-top: 0rem; margin-bottom: 0.3rem;">Have no account?</p>
+            <a href="{% url 'users:user_registration' %}" style="color: black; text-decoration: none;">Register</a>
+        </center>
 {% endblock %}

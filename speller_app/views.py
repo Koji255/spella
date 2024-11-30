@@ -1,7 +1,11 @@
+import datetime
+
 from django.shortcuts import render, redirect
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.db.models import Min
 
 from django.http import HttpResponse
 
@@ -18,29 +22,38 @@ from libs.text_handler.src.methods import speller
 
 
 
-# Index
 def index(request):
     return render(request, "speller_app/index.html")
 
 
-# Text spell page
 def spell(request):
+    '''View with main functionality of this web application'''
+    # For the 'POST' case
     if request.method == "POST":
         form = TextInputForm(data=request.POST)
         
         if form.is_valid():
             text = str(form.cleaned_data["text"])
-
+            # Using outer text_handler library to spell user's input
             spelled_text = speller(text)["spelled_text"]
-
+            # Header for report row in db
             header = f"{spelled_text[:46]}..." if len(spelled_text) > 45 else spelled_text
-
+            # Reports storing logic
             if request.user.is_authenticated:
-            
-                if report := Report.objects.create(
-                    user=User.objects.get(pk=request.user.id), header=header, text=spelled_text):
-                    
+                # Taking a user
+                user = User.objects.get(pk=request.user.id)
+                # DB stores only 15 reports for user. Than it starts to update old ones
+                if len(Report.objects.filter(user=user).all()) < 15:
+                    report = Report.objects.create(user=user, header=header, text=spelled_text)
+
                     report.save()
+
+                else:
+                    # Finds oldest report
+                    oldest_report = Report.objects.filter(user=user).aggregate(Min("date"))
+                    # Pops oldest one
+                    report = Report.objects.filter(user=user, date=oldest_report["date__min"]).update(
+                        header=header, text=spelled_text, date=datetime.datetime.today())
 
             return render(request, "speller_app/speller.html", context={
                 "form": form,
@@ -48,15 +61,16 @@ def spell(request):
                 # Needs for dynamicaly changing of spelled text background area
                 "lines": len(spelled_text) / 50,
             })
-        
+    # For 'GET' scenario 
     else:
         form = TextInputForm()
 
     return render(request, "speller_app/speller.html", context={"form": form})
 
 
-# Particular page with spelled text from history page
 def report(request, report_id):
+    '''View with stored in the db user's spelled output'''
+    # User's session validation
     if request.user.is_authenticated:
         spelled_text = Report.objects.get(pk=report_id).text
 
@@ -65,8 +79,8 @@ def report(request, report_id):
     return redirect(reverse("speller_app:index"))
 
 
-# Spelled text history page
 class HistoryView(LoginRequiredMixin, ListView):
+    '''View with table of spells history'''
     template_name = "speller_app/history.html"
 
     context_object_name = "object_list"
